@@ -1,13 +1,15 @@
 import requests
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
+from flask_ngrok import run_with_ngrok
 
 app = Flask(__name__)
+run_with_ngrok(app)
 
 # Dictionary containing activities and their corresponding information
 activities = {
     '1': 'Join The Community',
-    '2': 'Want to Know more about LRI',
+    '2': 'Want to Know more about LRI?',
     '3': 'NWN Scholarship Program',
 }
 
@@ -27,7 +29,9 @@ def webhook():
             else:
                 response.message(activities[incoming_message])
         else:
-            response.message("Sorry, I didn't understand that. Please select an option from the list.")
+            # Updated part: Include the list of activities with the error message
+            activities_list = "\n".join([f"{key}. {value}" for key, value in activities.items()])
+            response.message(f"Sorry, I didn't understand that. Please select an option from the list.\n{activities_list}")
     else:
         response.message("Please send a message.")
 
@@ -35,4 +39,4 @@ def webhook():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
