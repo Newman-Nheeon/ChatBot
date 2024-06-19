@@ -1,10 +1,10 @@
 import requests
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
-from flask_ngrok import run_with_ngrok
+# from flask_ngrok import run_with_ngrok
 
 app = Flask(__name__)
-run_with_ngrok(app)
+# run_with_ngrok(app)
 
 # Dictionary containing activities and their corresponding information
 activities = {
